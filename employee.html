@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة موظفي قديم ستورز</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;margin:0}
+.login,.dashboard{display:flex;justify-content:center;align-items:center;min-height:100vh}
+.card{background:#fff;padding:25px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.15);width:380px}
+input{width:100%;padding:10px;margin:8px 0}
+button{padding:10px 15px;border:0;border-radius:8px;background:#111;color:#fff;cursor:pointer}
+.dashboard{display:none;align-items:flex-start;padding:20px}
+.panel{width:100%;max-width:1200px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.box{background:#fff;padding:20px;border-radius:12px}
+table{width:100%;background:#fff;border-collapse:collapse;margin-top:20px}
+th,td{padding:10px;border:1px solid #ddd;text-align:right}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+<div class="card">
+<h2>دخول الموظفين</h2>
+<input id="u" placeholder="اسم المستخدم">
+<input id="p" type="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+<p>اسم المستخدم: mahmoud<br>كلمة المرور: Mahmoud@2005</p>
+</div>
+</div>
+
+<div class="dashboard" id="dashboard">
+<div class="panel">
+<h1>لوحة تحكم قديم ستورز</h1>
+
+<div class="stats">
+<div class="box"><h3>إجمالي المبيعات</h3><h2>4620 د.أ</h2></div>
+<div class="box"><h3>الطلبات</h3><h2>58</h2></div>
+<div class="box"><h3>العملاء</h3><h2>41</h2></div>
+<div class="box"><h3>طلبات جديدة</h3><h2>7</h2></div>
+</div>
+
+<table>
+<tr>
+<th>رقم الطلب</th>
+<th>العميل</th>
+<th>الإيميل</th>
+<th>طريقة الدفع</th>
+<th>المبلغ</th>
+<th>الحالة</th>
+</tr>
+<tr><td>1001</td><td>أحمد محمد</td><td>ahmad@example.com</td><td>بطاقة دفع</td><td>120 د.أ</td><td>جديد</td></tr>
+<tr><td>1002</td><td>سارة خالد</td><td>sara@example.com</td><td>الدفع عند الاستلام</td><td>85 د.أ</td><td>تم الشحن</td></tr>
+<tr><td>1003</td><td>محمود كريم</td><td>dedo001mahmoud@gmail.com</td><td>بطاقة دفع</td><td>65 د.أ</td><td>مكتمل</td></tr>
+</table>
+
+<br>
+<button onclick="logout()">تسجيل خروج</button>
+</div>
+</div>
+
+<script>
+function login(){
+let u=document.getElementById('u').value;
+let p=document.getElementById('p').value;
+if(u==='mahmoud' && p==='Mahmoud@2005'){
+document.getElementById('login').style.display='none';
+document.getElementById('dashboard').style.display='flex';
+}else{
+alert('بيانات الدخول غير صحيحة');
+}
+}
+function logout(){
+location.reload();
+}
+</script>
+
+</body>
+</html>
