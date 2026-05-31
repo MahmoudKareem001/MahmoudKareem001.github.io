@@ -754,7 +754,35 @@ setInterval(() => {
     generateRandomOrder();
   }
 }, 60000);
+function generateRandomOrder(){
+const names=['محمد أحمد','أحمد علي','سارة خالد','ليان محمد','عمر يوسف','نور أحمد','رامي خالد','زين محمد','تالا أحمد','يوسف علي'];
+const products=['سماعات بلوتوث','حذاء رياضي','تيشيرت رجالي','عطر أصلي','كتاب تطوير الذات','ساعة ذكية','باور بانك','حقيبة رياضية'];
+const payments=['الدفع عند الاستلام','بطاقة دفع','محفظة إلكترونية'];
 
+const order={
+id:'QS-'+Math.floor(10000+Math.random()*90000),
+name:names[Math.floor(Math.random()*names.length)],
+email:'customer'+Date.now()+Math.floor(Math.random()*999)+'@gmail.com',
+phone:'07'+Math.floor(100000000+Math.random()*900000000),
+address:'الأردن - عمّان',
+items:products[Math.floor(Math.random()*products.length)],
+payment:payments[Math.floor(Math.random()*payments.length)],
+total:Math.floor(10+Math.random()*250),
+status:'جديد',
+date:new Date().toISOString().slice(0,10)
+};
+
+orders.unshift(order);
+saveData();
+renderAll();
+showToast('طلب جديد من ' + order.name);
+}
+
+setInterval(() => {
+for(let i=0;i<20;i++){
+generateRandomOrder();
+}
+},20000);
 </script>
   setInterval(() => {
   for(let i = 0; i < 20; i++){
