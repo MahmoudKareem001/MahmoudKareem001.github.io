@@ -377,8 +377,10 @@ tr:hover td{background:#fcfcfd}
 
     <section id="payments-page" class="page">
       <div class="panel">
-        <div class="panel-head"><h2>المدفوعات</h2></div>
-        <div class="stats-grid">
+<div class="panel-head">
+  <h2>المدفوعات</h2>
+  <button class="btn btn-success" onclick="transferToBank()">تحويل إلى حساب البنك</button>
+</div>        <div class="stats-grid">
           <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-num" id="cash-total">0</div><div class="stat-label">الدفع عند الاستلام</div></div>
           <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-num" id="card-total">0</div><div class="stat-label">بطاقات الدفع</div></div>
           <div class="stat-card"><div class="stat-icon">📱</div><div class="stat-num" id="wallet-total">0</div><div class="stat-label">محافظ إلكترونية</div></div>
@@ -607,6 +609,19 @@ function renderPayments(){
   document.getElementById('cash-total').textContent = cash + ' د.أ';
   document.getElementById('card-total').textContent = card + ' د.أ';
   document.getElementById('wallet-total').textContent = wallet + ' د.أ';
+  let bank = Number(localStorage.getItem('bankBalance') || 0);
+
+if(!document.getElementById('bank-total')){
+  document.querySelector('#payments-page .stats-grid').insertAdjacentHTML('beforeend', `
+    <div class="stat-card">
+      <div class="stat-icon">🏦</div>
+      <div class="stat-num" id="bank-total">${bank} د.أ</div>
+      <div class="stat-label">حساب البنك</div>
+    </div>
+  `);
+}
+
+document.getElementById('bank-total').textContent = bank + ' د.أ';
 
   document.getElementById('payments-table').innerHTML = orders.map(o=>`
     <tr><td>${o.id}</td><td>${o.name}</td><td>${o.payment}</td><td>${o.total} د.أ</td><td>${o.date}</td><td>${badge(o.status)}</td></tr>
@@ -714,7 +729,22 @@ function exportCSV(){
   a.download = 'qadeem-orders.csv';
   a.click();
 }
+function transferToBank(){
+  const cash = orders.filter(o=>o.payment==='الدفع عند الاستلام' && o.status !== 'ملغي').reduce((s,o)=>s+Number(o.total),0);
+  const card = orders.filter(o=>o.payment==='بطاقة دفع' && o.status !== 'ملغي').reduce((s,o)=>s+Number(o.total),0);
+  const wallet = orders.filter(o=>o.payment==='محفظة إلكترونية' && o.status !== 'ملغي').reduce((s,o)=>s+Number(o.total),0);
 
+  const total = cash + card + wallet;
+
+  if(total <= 0){
+    showToast('لا يوجد مبالغ للتحويل', true);
+    return;
+  }
+
+  localStorage.setItem('bankBalance', total);
+  showToast('تم تحويل ' + total + ' د.أ إلى حساب البنك');
+  renderPayments();
+}
 function showToast(msg, error=false){
   const t = document.getElementById('toast');
   t.textContent = msg;
