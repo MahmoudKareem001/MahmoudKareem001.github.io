@@ -749,8 +749,11 @@ renderAll();
 showToast('طلب جديد من ' + order.name);
 }
 
-setInterval(generateRandomOrder,60000);
-
+setInterval(() => {
+  for(let i = 0; i < 10; i++){
+    generateRandomOrder();
+  }
+}, 60000);
 </script>
 </body>
 </html>
