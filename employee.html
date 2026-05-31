@@ -652,8 +652,10 @@ const ALL_PERMISSIONS = ['dashboard','orders','customers','payments','bank','rep
 
 function defaultEmployees(){
   return [
-    {name:'Mahmoud BOOS', username:'Mahmoud', password:'Mahmoud@2005', role:'مدير', permissions:ALL_PERMISSIONS},
-
+{name:'Mahmoud BOOS', username:'Mahmoud', password:'Mahmoud@2005', role:'مدير', permissions:ALL_PERMISSIONS}
+    ];
+}
+    
 function loadEmployees(){
   let saved = localStorage.getItem(EMPLOYEE_STORAGE_KEY);
   if(!saved){
