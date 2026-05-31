@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الموظفين | قديم ستورز</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1a1a2e;
+  --accent:#e94560;
+  --accent2:#f5a623;
+  --success:#10b981;
+  --warning:#f59e0b;
+  --danger:#ef4444;
+  --info:#2563eb;
+  --light:#f8f8f8;
+  --white:#fff;
+  --gray:#6b7280;
+  --border:#e5e7eb;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tajawal,sans-serif;background:#f4f6fb;color:var(--primary);direction:rtl}
+.login-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+  background:linear-gradient(135deg,var(--primary),#16213e,#0f3460);
+}
+.login-card{
+  width:100%;
+  max-width:430px;
+  background:white;
+  border-radius:24px;
+  padding:2rem;
+  box-shadow:0 20px 80px rgba(0,0,0,.25);
+}
+.logo{
+  font-family:Cairo,sans-serif;
+  font-size:1.7rem;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:.4rem;
+}
+.logo span{color:var(--accent)}
+.login-card p{text-align:center;color:var(--gray);margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+label{display:block;font-weight:800;margin-bottom:.45rem}
+input,select,textarea{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 14px;
+  font-family:Tajawal,sans-serif;
+  font-size:.96rem;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:11px 18px;
+  font-family:Tajawal,sans-serif;
+  font-weight:900;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.4rem;
+}
+.btn-primary{background:var(--accent);color:white}
+.btn-dark{background:var(--primary);color:white}
+.btn-light{background:#f3f4f6;color:var(--primary)}
+.btn-danger{background:var(--danger);color:white}
+.btn-success{background:var(--success);color:white}
+.btn-full{width:100%}
+.hint{
+  background:#fff5f6;
+  border:1px dashed #ffc4cf;
+  border-radius:14px;
+  padding:.9rem;
+  color:#7f1d1d;
+  font-size:.9rem;
+  line-height:1.7;
+  margin-top:1rem;
+}
+.app{display:none;min-height:100vh}
+.sidebar{
+  position:fixed;
+  top:0;
+  right:0;
+  width:260px;
+  height:100vh;
+  background:var(--primary);
+  color:white;
+  padding:1.3rem;
+  overflow:auto;
+  z-index:10;
+}
+.side-logo{
+  font-family:Cairo,sans-serif;
+  font-size:1.35rem;
+  font-weight:800;
+  margin-bottom:1.3rem;
+}
+.side-logo span{color:var(--accent)}
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  padding:.85rem 1rem;
+  border-radius:14px;
+  color:rgba(255,255,255,.75);
+  cursor:pointer;
+  margin-bottom:.35rem;
+  font-weight:700;
+}
+.nav-item:hover,.nav-item.active{background:rgba(255,255,255,.1);color:white}
+.main{
+  margin-right:260px;
+  padding:1.3rem;
+}
+.topbar{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1rem 1.2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  box-shadow:var(--shadow);
+  margin-bottom:1.2rem;
+}
+.topbar h1{font-family:Cairo,sans-serif;font-size:1.35rem}
+.topbar small{color:var(--gray)}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1rem;
+  margin-bottom:1.2rem;
+}
+.stat-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1.2rem;
+  box-shadow:var(--shadow);
+}
+.stat-icon{font-size:1.7rem;margin-bottom:.4rem}
+.stat-num{font-family:Cairo,sans-serif;font-size:1.7rem;font-weight:800}
+.stat-label{color:var(--gray);font-size:.9rem}
+.panel{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1.2rem;
+  box-shadow:var(--shadow);
+  margin-bottom:1.2rem;
+}
+.panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+  margin-bottom:1rem;
+}
+.panel h2{font-family:Cairo,sans-serif;font-size:1.2rem}
+.toolbar{
+  display:grid;
+  grid-template-columns:1fr 180px 180px;
+  gap:.8rem;
+  margin-bottom:1rem;
+}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th,td{
+  padding:.85rem;
+  border-bottom:1px solid var(--border);
+  text-align:right;
+  vertical-align:middle;
+  font-size:.93rem;
+}
+th{background:#f9fafb;font-weight:900;color:#374151}
+tr:hover td{background:#fcfcfd}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  padding:.28rem .7rem;
+  font-size:.78rem;
+  font-weight:900;
+}
+.badge-new{background:#dbeafe;color:#1d4ed8}
+.badge-processing{background:#fef3c7;color:#92400e}
+.badge-shipped{background:#ede9fe;color:#6d28d9}
+.badge-done{background:#d1fae5;color:#065f46}
+.badge-cancel{background:#fee2e2;color:#991b1b}
+.details{
+  display:none;
+  background:#f9fafb;
+  border-radius:14px;
+  padding:1rem;
+  margin-top:.5rem;
+  line-height:1.8;
+}
+.page{display:none}
+.page.active{display:block}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+  z-index:50;
+}
+.modal.open{display:flex}
+.modal-card{
+  background:white;
+  border-radius:22px;
+  max-width:620px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+  padding:1.3rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(90px);
+  background:var(--success);
+  color:white;
+  padding:12px 22px;
+  border-radius:999px;
+  font-weight:900;
+  z-index:100;
+  transition:.3s;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.empty{
+  text-align:center;
+  color:var(--gray);
+  padding:2rem;
+}
+@media(max-width:900px){
+  .sidebar{position:static;width:100%;height:auto}
+  .main{margin-right:0}
+  .toolbar{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .topbar{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<section class="login-page" id="login-page">
+  <div class="login-card">
+    <div class="logo">قديم<span>ستورز</span> | لوحة الموظفين</div>
+    <p>دخول خاص لمتابعة العملاء والطلبات والمدفوعات</p>
+    <div class="form-group">
+      <label>اسم المستخدم</label>
+      <input id="login-user" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label>كلمة المرور</label>
+      <input id="login-pass" type="password" placeholder="1234">
+    </div>
+    <button class="btn btn-primary btn-full" onclick="login()">دخول الموظف</button>
+    <div class="hint">
+      بيانات الدخول التجريبية:<br>
+      اسم المستخدم: <b>admin</b><br>
+      كلمة المرور: <b>1234</b>
+    </div>
+  </div>
+</section>
+
+<section class="app" id="app">
+  <aside class="sidebar">
+    <div class="side-logo">قديم<span>ستورز</span> 🛍</div>
+    <div class="nav-item active" onclick="showPage('dashboard', this)">📊 الرئيسية</div>
+    <div class="nav-item" onclick="showPage('orders', this)">📦 الطلبات</div>
+    <div class="nav-item" onclick="showPage('customers', this)">👥 العملاء</div>
+    <div class="nav-item" onclick="showPage('payments', this)">💳 المدفوعات</div>
+    <div class="nav-item" onclick="showPage('reports', this)">📈 التقارير</div>
+    <div class="nav-item" onclick="showPage('settings', this)">⚙️ الإعدادات</div>
+    <div class="nav-item" onclick="logout()">🚪 تسجيل خروج</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1 id="page-title">لوحة الموظفين</h1>
+        <small id="today-date"></small>
+      </div>
+      <div>
+        <button class="btn btn-dark" onclick="openAddOrder()">+ إضافة طلب تجريبي</button>
+        <button class="btn btn-light" onclick="exportCSV()">تصدير CSV</button>
+      </div>
+    </div>
+
+    <section id="dashboard-page" class="page active">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-num" id="stat-sales">0 د.أ</div><div class="stat-label">إجمالي المبيعات</div></div>
+        <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-num" id="stat-orders">0</div><div class="stat-label">عدد الطلبات</div></div>
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-num" id="stat-customers">0</div><div class="stat-label">عدد العملاء</div></div>
+        <div class="stat-card"><div class="stat-icon">🆕</div><div class="stat-num" id="stat-new">0</div><div class="stat-label">طلبات جديدة</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>آخر الطلبات</h2>
+          <button class="btn btn-light" onclick="showPageByName('orders')">عرض الكل</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>رقم الطلب</th><th>العميل</th><th>الإيميل</th><th>الدفع</th><th>المبلغ</th><th>الحالة</th></tr></thead>
+            <tbody id="latest-orders"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="orders-page" class="page">
+      <div class="panel">
+        <div class="panel-head"><h2>إدارة الطلبات</h2></div>
+        <div class="toolbar">
+          <input id="order-search" oninput="renderOrders()" placeholder="ابحث باسم العميل أو الإيميل أو رقم الطلب">
+          <select id="status-filter" onchange="renderOrders()">
+            <option value="">كل الحالات</option>
+            <option value="جديد">جديد</option>
+            <option value="قيد التجهيز">قيد التجهيز</option>
+            <option value="تم الشحن">تم الشحن</option>
+            <option value="مكتمل">مكتمل</option>
+            <option value="ملغي">ملغي</option>
+          </select>
+          <select id="payment-filter" onchange="renderOrders()">
+            <option value="">كل طرق الدفع</option>
+            <option value="الدفع عند الاستلام">الدفع عند الاستلام</option>
+            <option value="بطاقة دفع">بطاقة دفع</option>
+            <option value="محفظة إلكترونية">محفظة إلكترونية</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>رقم الطلب</th><th>العميل</th><th>الإيميل</th><th>الهاتف</th><th>طريقة الدفع</th><th>المبلغ</th><th>الحالة</th><th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="customers-page" class="page">
+      <div class="panel">
+        <div class="panel-head"><h2>العملاء والحسابات</h2></div>
+        <input id="customer-search" oninput="renderCustomers()" placeholder="ابحث عن عميل أو إيميل أو هاتف" style="margin-bottom:1rem">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>الاسم</th><th>الإيميل</th><th>الهاتف</th><th>عنوان التوصيل</th><th>عدد الطلبات</th><th>إجمالي المشتريات</th></tr></thead>
+            <tbody id="customers-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="payments-page" class="page">
+      <div class="panel">
+        <div class="panel-head"><h2>المدفوعات</h2></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon">💵</div><div class="stat-num" id="cash-total">0</div><div class="stat-label">الدفع عند الاستلام</div></div>
+          <div class="stat-card"><div class="stat-icon">💳</div><div class="stat-num" id="card-total">0</div><div class="stat-label">بطاقات الدفع</div></div>
+          <div class="stat-card"><div class="stat-icon">📱</div><div class="stat-num" id="wallet-total">0</div><div class="stat-label">محافظ إلكترونية</div></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>رقم الطلب</th><th>العميل</th><th>طريقة الدفع</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+            <tbody id="payments-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="reports-page" class="page">
+      <div class="panel">
+        <div class="panel-head"><h2>التقارير السريعة</h2></div>
+        <div id="report-content"></div>
+      </div>
+    </section>
+
+    <section id="settings-page" class="page">
+      <div class="panel">
+        <div class="panel-head"><h2>الإعدادات</h2></div>
+        <div class="store-notice">
+          هذه نسخة موظفين بسيطة تعمل على المتصفح وتخزن البيانات داخل نفس الجهاز باستخدام LocalStorage.
+          للطلبات الحقيقية من كل الأجهزة لازم نربط الموقع بقاعدة بيانات مثل Firebase أو Supabase.
+        </div>
+        <button class="btn btn-danger" onclick="resetData()">حذف كل البيانات التجريبية</button>
+      </div>
+    </section>
+  </main>
+</section>
+
+<div class="modal" id="order-modal">
+  <div class="modal-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+      <h2>إضافة طلب</h2>
+      <button class="close" onclick="closeAddOrder()">×</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>اسم العميل</label><input id="m-name"></div>
+      <div class="form-group"><label>الإيميل</label><input id="m-email" type="email"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>الهاتف</label><input id="m-phone"></div>
+      <div class="form-group"><label>طريقة الدفع</label><select id="m-payment"><option>الدفع عند الاستلام</option><option>بطاقة دفع</option><option>محفظة إلكترونية</option></select></div>
+    </div>
+    <div class="form-group"><label>عنوان التوصيل</label><input id="m-address"></div>
+    <div class="form-group"><label>المنتجات</label><textarea id="m-items" placeholder="مثال: سماعات + حذاء رياضي"></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>المبلغ</label><input id="m-total" type="number"></div>
+      <div class="form-group"><label>الحالة</label><select id="m-status"><option>جديد</option><option>قيد التجهيز</option><option>تم الشحن</option><option>مكتمل</option><option>ملغي</option></select></div>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="addOrder()">حفظ الطلب</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'qadeem_employee_orders';
+
+const sampleOrders = [
+  {id:'QS-1001', name:'أحمد محمد', email:'ahmad@example.com', phone:'0791112233', address:'عمّان - الجبيهة', items:'سماعات Noise Cancel + ساعة ذكية', payment:'بطاقة دفع', total:124, status:'جديد', date:'2026-05-31'},
+  {id:'QS-1002', name:'سارة خالد', email:'sara@example.com', phone:'0782223344', address:'إربد - الحي الشرقي', items:'عطر أصلي نسائي + كريم عناية', payment:'محفظة إلكترونية', total:87, status:'قيد التجهيز', date:'2026-05-30'},
+  {id:'QS-1003', name:'محمود كريم', email:'dedo001mahmoud@gmail.com', phone:'0790352727', address:'عمّان - الأردن', items:'تيشيرت رجالي + سنيكر رجالي', payment:'الدفع عند الاستلام', total:68, status:'تم الشحن', date:'2026-05-29'},
+  {id:'QS-1004', name:'ليان أحمد', email:'layan@example.com', phone:'0773334455', address:'الزرقاء', items:'كتاب تطوير الذات + مصباح ديكور', payment:'الدفع عند الاستلام', total:33, status:'مكتمل', date:'2026-05-28'},
+  {id:'QS-1005', name:'عمر علي', email:'omar@example.com', phone:'0794445566', address:'العقبة', items:'باور بانك سريع + راوتر WiFi', payment:'بطاقة دفع', total:150, status:'جديد', date:'2026-05-31'}
+];
+
+let orders = [];
+
+function loadData(){
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if(saved) orders = JSON.parse(saved);
+  else {
+    orders = sampleOrders;
+    saveData();
+  }
+}
+
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+}
+
+function login(){
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value.trim();
+  if(user === 'admin' && pass === '1234'){
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    showToast('بيانات الدخول غير صحيحة', true);
+  }
+}
+
+function logout(){
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-page').style.display = 'flex';
+}
+
+function init(){
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('ar-JO', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  loadData();
+  renderAll();
+}
+
+function renderAll(){
+  renderStats();
+  renderLatest();
+  renderOrders();
+  renderCustomers();
+  renderPayments();
+  renderReports();
+}
+
+function renderStats(){
+  const totalSales = orders.filter(o=>o.status !== 'ملغي').reduce((s,o)=>s + Number(o.total || 0), 0);
+  const customers = new Set(orders.map(o=>o.email)).size;
+  const newOrders = orders.filter(o=>o.status === 'جديد').length;
+  document.getElementById('stat-sales').textContent = totalSales + ' د.أ';
+  document.getElementById('stat-orders').textContent = orders.length;
+  document.getElementById('stat-customers').textContent = customers;
+  document.getElementById('stat-new').textContent = newOrders;
+}
+
+function badge(status){
+  const cls = {
+    'جديد':'badge-new',
+    'قيد التجهيز':'badge-processing',
+    'تم الشحن':'badge-shipped',
+    'مكتمل':'badge-done',
+    'ملغي':'badge-cancel'
+  }[status] || 'badge-new';
+  return `<span class="badge ${cls}">${status}</span>`;
+}
+
+function renderLatest(){
+  document.getElementById('latest-orders').innerHTML = orders.slice(0,5).map(o=>`
+    <tr>
+      <td>${o.id}</td>
+      <td>${o.name}</td>
+      <td>${o.email}</td>
+      <td>${o.payment}</td>
+      <td>${o.total} د.أ</td>
+      <td>${badge(o.status)}</td>
+    </tr>
+  `).join('');
+}
+
+function renderOrders(){
+  const q = (document.getElementById('order-search')?.value || '').toLowerCase();
+  const status = document.getElementById('status-filter')?.value || '';
+  const payment = document.getElementById('payment-filter')?.value || '';
+
+  const filtered = orders.filter(o => {
+    const matchQ = (o.id + o.name + o.email + o.phone + o.items).toLowerCase().includes(q);
+    const matchStatus = !status || o.status === status;
+    const matchPayment = !payment || o.payment === payment;
+    return matchQ && matchStatus && matchPayment;
+  });
+
+  const tbody = document.getElementById('orders-table');
+  if(!tbody) return;
+
+  tbody.innerHTML = filtered.map((o, i)=>`
+    <tr>
+      <td><b>${o.id}</b><br><small>${o.date}</small></td>
+      <td>${o.name}</td>
+      <td>${o.email}</td>
+      <td>${o.phone}</td>
+      <td>${o.payment}</td>
+      <td><b>${o.total} د.أ</b></td>
+      <td>
+        <select onchange="updateStatus('${o.id}', this.value)">
+          ${['جديد','قيد التجهيز','تم الشحن','مكتمل','ملغي'].map(s=>`<option ${o.status===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td>
+        <button class="btn btn-light" onclick="toggleDetails('${o.id}')">تفاصيل</button>
+        <button class="btn btn-danger" onclick="deleteOrder('${o.id}')">حذف</button>
+        <div class="details" id="details-${o.id}">
+          <b>المنتجات:</b> ${o.items}<br>
+          <b>عنوان التوصيل:</b> ${o.address}<br>
+          <b>طريقة الدفع:</b> ${o.payment}<br>
+          <b>الإيميل:</b> ${o.email}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  if(!filtered.length) tbody.innerHTML = `<tr><td colspan="8" class="empty">لا يوجد طلبات مطابقة</td></tr>`;
+}
+
+function renderCustomers(){
+  const q = (document.getElementById('customer-search')?.value || '').toLowerCase();
+  const map = {};
+  orders.forEach(o=>{
+    if(!map[o.email]) map[o.email] = {name:o.name,email:o.email,phone:o.phone,address:o.address,count:0,total:0};
+    map[o.email].count++;
+    if(o.status !== 'ملغي') map[o.email].total += Number(o.total || 0);
+  });
+  const customers = Object.values(map).filter(c => (c.name+c.email+c.phone+c.address).toLowerCase().includes(q));
+  document.getElementById('customers-table').innerHTML = customers.map(c=>`
+    <tr>
+      <td>${c.name}</td><td>${c.email}</td><td>${c.phone}</td><td>${c.address}</td><td>${c.count}</td><td><b>${c.total} د.أ</b></td>
+    </tr>
+  `).join('') || `<tr><td colspan="6" class="empty">لا يوجد عملاء</td></tr>`;
+}
+
+function renderPayments(){
+  const cash = orders.filter(o=>o.payment==='الدفع عند الاستلام' && o.status !== 'ملغي').reduce((s,o)=>s+Number(o.total),0);
+  const card = orders.filter(o=>o.payment==='بطاقة دفع' && o.status !== 'ملغي').reduce((s,o)=>s+Number(o.total),0);
+  const wallet = orders.filter(o=>o.payment==='محفظة إلكترونية' && o.status !== 'ملغي').reduce((s,o)=>s+Number(o.total),0);
+  document.getElementById('cash-total').textContent = cash + ' د.أ';
+  document.getElementById('card-total').textContent = card + ' د.أ';
+  document.getElementById('wallet-total').textContent = wallet + ' د.أ';
+
+  document.getElementById('payments-table').innerHTML = orders.map(o=>`
+    <tr><td>${o.id}</td><td>${o.name}</td><td>${o.payment}</td><td>${o.total} د.أ</td><td>${o.date}</td><td>${badge(o.status)}</td></tr>
+  `).join('');
+}
+
+function renderReports(){
+  const byStatus = ['جديد','قيد التجهيز','تم الشحن','مكتمل','ملغي'].map(s=>({s, n: orders.filter(o=>o.status===s).length}));
+  const byPayment = ['الدفع عند الاستلام','بطاقة دفع','محفظة إلكترونية'].map(p=>({p, n: orders.filter(o=>o.payment===p).length}));
+  document.getElementById('report-content').innerHTML = `
+    <div class="stats-grid">
+      ${byStatus.map(x=>`<div class="stat-card"><div class="stat-num">${x.n}</div><div class="stat-label">${x.s}</div></div>`).join('')}
+    </div>
+    <div class="panel-head"><h2>حسب طريقة الدفع</h2></div>
+    <div class="stats-grid">
+      ${byPayment.map(x=>`<div class="stat-card"><div class="stat-num">${x.n}</div><div class="stat-label">${x.p}</div></div>`).join('')}
+    </div>
+  `;
+}
+
+function updateStatus(id, status){
+  const order = orders.find(o=>o.id===id);
+  if(order) {
+    order.status = status;
+    saveData();
+    renderAll();
+    showToast('تم تحديث حالة الطلب');
+  }
+}
+
+function toggleDetails(id){
+  const el = document.getElementById('details-'+id);
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+function deleteOrder(id){
+  if(confirm('هل تريد حذف الطلب؟')){
+    orders = orders.filter(o=>o.id!==id);
+    saveData();
+    renderAll();
+    showToast('تم حذف الطلب');
+  }
+}
+
+function openAddOrder(){
+  document.getElementById('order-modal').classList.add('open');
+}
+function closeAddOrder(){
+  document.getElementById('order-modal').classList.remove('open');
+}
+
+function addOrder(){
+  const name = val('m-name'), email = val('m-email'), phone = val('m-phone'), address = val('m-address'), items = val('m-items');
+  const total = Number(val('m-total'));
+  const payment = val('m-payment'), status = val('m-status');
+  if(!name || !email || !phone || !address || !items || !total) return showToast('عبئ كل بيانات الطلب', true);
+
+  const order = {
+    id: 'QS-' + Math.floor(1000 + Math.random()*9000),
+    name,email,phone,address,items,total,payment,status,
+    date: new Date().toISOString().slice(0,10)
+  };
+  orders.unshift(order);
+  saveData();
+  closeAddOrder();
+  ['m-name','m-email','m-phone','m-address','m-items','m-total'].forEach(id=>document.getElementById(id).value='');
+  renderAll();
+  showToast('تم إضافة الطلب');
+}
+
+function val(id){return document.getElementById(id).value.trim()}
+
+function showPage(page, item){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page+'-page').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(item) item.classList.add('active');
+  const titles = {dashboard:'الرئيسية',orders:'الطلبات',customers:'العملاء',payments:'المدفوعات',reports:'التقارير',settings:'الإعدادات'};
+  document.getElementById('page-title').textContent = titles[page] || 'لوحة الموظفين';
+  renderAll();
+}
+
+function showPageByName(page){
+  showPage(page, [...document.querySelectorAll('.nav-item')].find(x=>x.textContent.includes({orders:'الطلبات'}[page] || '')));
+}
+
+function resetData(){
+  if(confirm('هل أنت متأكد من حذف كل البيانات؟')){
+    localStorage.removeItem(STORAGE_KEY);
+    loadData();
+    renderAll();
+    showToast('تمت إعادة البيانات التجريبية');
+  }
+}
+
+function exportCSV(){
+  const rows = [
+    ['رقم الطلب','الاسم','الإيميل','الهاتف','العنوان','المنتجات','طريقة الدفع','المبلغ','الحالة','التاريخ'],
+    ...orders.map(o=>[o.id,o.name,o.email,o.phone,o.address,o.items,o.payment,o.total,o.status,o.date])
+  ];
+  const csv = rows.map(r=>r.map(x=>`"${String(x).replaceAll('"','""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'qadeem-orders.csv';
+  a.click();
+}
+
+function showToast(msg, error=false){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = error ? 'var(--danger)' : 'var(--success)';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+</script>
+</body>
+</html>
